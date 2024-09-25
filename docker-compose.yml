@@ -2,8 +2,9 @@ version: "3.9"
 
 services:
   adminer:
-    image: adminer
+    image: 014498620594.dkr.ecr.ap-southeast-1.amazonaws.com/demo-cicd/nginx:latest
     container_name: web
     restart: always
     ports:
-      - "80:8080"
+      - "80:80"
+      
