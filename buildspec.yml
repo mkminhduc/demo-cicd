@@ -3,13 +3,19 @@ phases:
   pre_build:
     commands:
       - echo "1. pre build step"
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.${AWS_REGION}.amazonaws.com
+  
+    on-failure: ABORT
   build:
     commands:
       - echo "2. Build step"
-      - echo "Xin chao cac ban"
+      - docker build -f ./Dockerfile -t custom-nginx:latest .
   post_build:
     commands:
       - echo 3. "Post build"
+      - docker tag custom-nginx:latest $REPO_URI:latest
+      - docker push $REPO_URI:latest
+    on-failure: ABORT
 
 artifacts:
   files:
