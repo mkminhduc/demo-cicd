@@ -6,6 +6,7 @@ phases:
   build:
     commands:
       - echo "2. Build step"
+      - echo "Xin chao cac ban"
   post_build:
     commands:
       - echo 3. "Post build"
