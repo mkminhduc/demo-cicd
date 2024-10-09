@@ -1,11 +1,9 @@
 version: 0.2
-
-env:
- variables:
-   AWS_REGION: "ap-southeast-1"
-   ACCOUNT_ID: "014498620594"
-   REPO_URI: "$ACCOUNT_ID.dkr.ecr.${AWS_REGION}.amazonaws.com/custom-nginx"
-
+# env:
+#  variables:
+#    AWS_REGION: "ap-southeast-1"
+#    ACCOUNT_ID: "123456789"
+#    REPO_URI: "$ACCOUNT_ID.dkr.ecr.${AWS_REGION}.amazonaws.com/custom-nginx"
 phases:
   pre_build:
     commands:
@@ -19,12 +17,9 @@ phases:
       - docker build -f ./Dockerfile -t custom-nginx:latest .
   post_build:
     commands:
-      - echo 3.1 "Post build"
+      - echo 3. "Post build"
       - docker tag custom-nginx:latest $REPO_URI:latest
       - docker push $REPO_URI:latest
-      - echo "3.2 Create image definitions --------"
-      - printf "[{\"name\":\"webserver\",\"imageUri\":\"$REPO_URI:latest\"}]" >> imagedefinitions.json
-      - cat imagedefinitions.json
     on-failure: ABORT
 
 artifacts:
@@ -33,4 +28,3 @@ artifacts:
     - appspec.yml
     - docker-compose.yml
     - .env
-    - imagedefinitions.json
